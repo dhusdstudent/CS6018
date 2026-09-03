@@ -1,0 +1,58 @@
+Degree Plan: Phase 1
+In this assignment/lab, we'll build a simple app for planning an undergraduate degree.
+
+We'll build on this app for at least one more assignment, so we'll focus on making it easy to modify and update.
+
+Requirements
+For this phase of the assignment, your app must meet the following requirements:
+
+A user must be able to enter, update, and edit the list of courses they plan to take.
+
+Courses have:
+
+A department string, such as CS
+
+A course number, such as 6018
+
+There must be a list of degree requirements.
+
+Each degree requirement must visually indicate whether it is satisfied by the courses in the user's list.
+
+If all requirements are satisfied, the app should indicate that in some way.
+
+For now, your app must support these types of degree requirements:
+
+Specific course: The student must take a particular course.
+
+Example: You must take CS 101.
+
+One course from a set: The student must take at least one course from a given set.
+
+Example: You must take PHIL 101 or SOC 101.
+
+Aside: Functions and Functional Programming are great
+As a challenge, I recommend embracing a functional programming style as much as possible.
+
+For example, consider replacing code like this:
+
+var ret = listOf<Whatever>()
+for (x in something) {
+    ret.add(x.method())
+}
+with the functional equivalent:
+
+val ret = something.map { it.method() }
+Chat with your friends, TA, or professor about why the second version might be preferable.
+
+Finishing Up — Read Before Starting
+Since we'll be building more features on top of this app, we want to make sure the code is in a good place after this phase.
+
+Split up large Composables into smaller pieces.
+
+Use state hoisting so that you can define @Preview @Composable previews and see your Composables in action without running the entire app.
+
+I recommend writing a @Preview at the same time you write the @Composable itself!
+
+Write unit tests for any business logic, such as checking whether degree requirements are satisfied.
+
+Try to replace loops with functional alternatives when possible.
