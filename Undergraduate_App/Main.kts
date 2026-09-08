@@ -49,17 +49,14 @@ fun createDegree_CS(): Degree {
     )
 }
 
-fun createDegree_SOC(){
+fun createDegree_SOC(): Degree {
 
 }
 
-fun createDegree_PHIL(){
+fun createDegree_PHIL(): Degree {
 
 }
 
-fun createError(){
-
-}
 
 fun isReqSatisfied(
     requirement: DegreeRequirement,
@@ -74,17 +71,21 @@ fun isReqSatisfied(
     }
 }
 
-fun majorReqs(input: Int) {
+fun majorReqs(input: Int) : Degree {
     return when (input) {
         1 -> createDegree_CS()
         2 -> createDegree_PHIL()
         3 -> createDegree_SOC()
-        else -> createError()
-    } as Unit
+        else -> error("Invalid major")
+    }
 }
 
 fun createStudent(input: Int): Student {
-    val you = Student()
+    val degree = majorReqs(input)
+
+    return Student(
+        major = degree,
+        courses = emptyList())
 }
 
 fun pickYourMajor(){
@@ -95,6 +96,13 @@ fun pickYourMajor(){
 
     val answer = readLine()!!.toInt()
     majorReqs(answer)
+}
+
+fun reqStatus(
+    degree: Degree,
+    studentCourse: List<Course>
+) :List<Boolean> {
+    return degree.requirements.map { requirement -> isReqSatisfied(requirement, studentCourse) }
 }
 
 fun main() {
