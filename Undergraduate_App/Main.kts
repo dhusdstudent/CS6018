@@ -26,7 +26,22 @@ data class Student(
 fun setUpCourses() = listOf(
     Course("CS", 1010),
     Course("CS", 1111),
-    Course("CS", 1212)
+    Course("CS", 1212),
+    Course("CS", 2222),
+    Course("CS", 3333),
+    Course("SOC", 1011),
+    Course("SOC", 1111),
+    Course("SOC", 1212),
+    Course("SOC", 3010),
+    Course("SOC", 3020),
+    Course("SOC", 3030),
+    Course("PHIL", 1011),
+    Course("PHIL", 1111),
+    Course("PHIL", 2211),
+    Course("PHIL", 2212),
+    Course("PHIL", 3333),
+    Course("PHIL", 2000),
+    Course("PHIL", 3000)
 )
 
 fun createDegree_CS(): Degree {
@@ -50,11 +65,52 @@ fun createDegree_CS(): Degree {
 }
 
 fun createDegree_SOC(): Degree {
-
+    return Degree(
+        requirements = listOf(
+            CourseRequirement(
+                Course("SOC", 1011),
+            ),
+            OneOfRequirement(
+                listOf(
+                    Course("SOC", 1111),
+                    Course("SOC", 1212),
+                )
+            ),
+            OneOfRequirement(
+                listOf(
+                    Course("SOC", 3010),
+                    Course("SOC", 3020),
+                    Course("SOC", 3030),
+                )
+            )
+        )
+    )
 }
 
 fun createDegree_PHIL(): Degree {
-
+    return Degree(
+        requirements = listOf(
+            OneOfRequirement(
+                listOf(
+                    Course("PHIL", 1011),
+                    Course("PHIL", 1111),
+                )
+            ),
+            OneOfRequirement(
+                listOf(
+                    Course("PHIL", 2211),
+                    Course("PHIL", 2212),
+                    Course("PHIL", 3333)
+                )
+            ),
+            OneOfRequirement(
+                listOf(
+                    Course("PHIL", 2000),
+                    Course("PHIL", 3000)
+                )
+            )
+        )
+    )
 }
 
 
