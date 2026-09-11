@@ -144,7 +144,7 @@ fun createStudent(input: Int): Student {
         courses = emptyList())
 }
 
-fun pickYourMajor(){
+fun pickYourMajor() : Degree {
     print("Enter the number that corresponds to your major...")
     print("1. Computer Science")
     print("2. Philosophy")
@@ -156,12 +156,27 @@ fun pickYourMajor(){
 
 fun reqStatus(
     degree: Degree,
-    studentCourse: List<Course>
+    studentCourses: List<Course>
 ) :List<Boolean> {
     return degree.requirements.map { requirement -> isReqSatisfied(requirement, studentCourse) }
 }
 
 fun main() {
     val courses = setUpCourses()
+    val degree = pickYourMajor()
+    
+    val student = Student(
+        major = degree,
+        course = listOf(
+            Course("CS", 1010),
+            Course("CS", 1111)
+        )
+    )
 
+    val status = reqStatus(
+        student.major,
+        student.courses
+    )
+
+    println(status)
 }
