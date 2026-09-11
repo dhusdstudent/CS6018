@@ -1,26 +1,4 @@
-data class Course(
-    val department: String,
-    val number: Int
-)
 
-sealed interface DegreeRequirement
-
-data class Degree(
-    val requirements: List<DegreeRequirement>
-)
-
-data class CourseRequirement(
-    val course: Course
-) : DegreeRequirement
-
-data class OneOfRequirement(
-    val courses: List<Course>
-) : DegreeRequirement
-
-data class Student(
-    val major: Degree,
-    val courses: List<Course>
-)
 
 //NOTE TO SELF: Kotlin calls this 'type inference'
 fun setUpCourses() = listOf(
@@ -55,9 +33,9 @@ fun createDegree_CS(): Degree {
             ),
             OneOfRequirement(
                 listOf(
-                Course("CS", 1212),
-                Course("CS", 2222),
-                Course("CS", 3333)
+                    Course("CS", 1212),
+                    Course("CS", 2222),
+                    Course("CS", 3333)
                 )
             )
         )
@@ -113,20 +91,6 @@ fun createDegree_PHIL(): Degree {
     )
 }
 
-
-fun isReqSatisfied(
-    requirement: DegreeRequirement,
-    studentCourses: List<Course>
-): Boolean {
-    return when (requirement) {
-        is CourseRequirement ->
-            requirement.course in studentCourses //does student list contain course?
-
-        is OneOfRequirement ->
-            requirement.courses.any { it in studentCourses }
-    }
-}
-
 fun majorReqs(input: Int) : Degree {
     return when (input) {
         1 -> createDegree_CS()
@@ -135,6 +99,8 @@ fun majorReqs(input: Int) : Degree {
         else -> error("Invalid major")
     }
 }
+
+
 
 fun createStudent(input: Int): Student {
     val degree = majorReqs(input)
@@ -154,14 +120,3 @@ fun pickYourMajor(){
     majorReqs(answer)
 }
 
-fun reqStatus(
-    degree: Degree,
-    studentCourse: List<Course>
-) :List<Boolean> {
-    return degree.requirements.map { requirement -> isReqSatisfied(requirement, studentCourse) }
-}
-
-fun main() {
-    val courses = setUpCourses()
-
-}
