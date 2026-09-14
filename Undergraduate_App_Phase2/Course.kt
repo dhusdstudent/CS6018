@@ -1,4 +1,4 @@
 data class Course(
     val department: String,
-    val number: Int
+    val number: String
 )

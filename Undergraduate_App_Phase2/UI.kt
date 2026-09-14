@@ -3,14 +3,10 @@
 
 @Composable
 fun StudentScreen(
-    student: Student?,
-    onAddCourse: (Course) -> Unit
+    student: Student,
+    onAddCourse: (Course) -> Unit,
+    onRemoveCourse: (Course) -> Unit
 ) {
-
-    if (student == null) {
-        Text("You need to pick your major first!")
-        return
-    }
 
     Column {
         Text("You picked a major. How exciting!")
@@ -23,17 +19,17 @@ fun StudentScreen(
 
 @Composable
 fun MajorSelect(
-    majors: List<Pair<String,Degree>>,
-    onMajorSelected: (Degree) -> Unit //takes in degree and returns uit
+    majors: List<DegreePlan>,
+    onMajorSelected: (DegreePlan) -> Unit //takes in degree and returns uit
 ) {
     Column{
         Text("Choose a major...")
 
-        majors.forEach { (name, degree) ->
+        majors.forEach { major ->
             Button(onClick = { //returns major user clicks
-                onMajorSelected(degree)
+                onMajorSelected(major)
             }){
-                Text(name)
+                Text(major.name)
             }
         }
     }
@@ -42,16 +38,25 @@ fun MajorSelect(
 @Composable
 fun App() {
     val viewModel: DegreeViewModel = viewModel()
+    val student = viewModel.student
 
 //    StudentScreen(
 //        student = viewModel.student,
 //        onAddCourse = viewModel::addCourse
 //    )
 
-    MajorSelect(
-        majors = viewModel.availableMajors,
-        onMajorSelected = viewModel::selectMajor
-    )
+    if (student == null) {
+        MajorSelect(
+            majors = viewModel.availableMajors,
+            onMajorSelected = viewModel::selectMajor
+        )
+    } else {
+        StudentScreen(
+            student = student,
+            onAddCourse = viewModel::addCourse,
+            onRemoveCourse = viewModel::removeCourse
+        )
+    }
 }
 
 class Activity : ComponentActivity() {

@@ -164,7 +164,7 @@ fun reqStatus(
 fun main() {
     val courses = setUpCourses()
     val degree = pickYourMajor()
-    
+
     val student = Student(
         major = degree,
         course = listOf(

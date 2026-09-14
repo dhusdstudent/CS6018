@@ -24,6 +24,7 @@ fun setUpCourses() = listOf(
 
 fun createDegree_CS(): Degree {
     return Degree(
+        name = "Computer Science"
         requirements = listOf(
             CourseRequirement(
                 Course("CS", 1010)
@@ -44,6 +45,7 @@ fun createDegree_CS(): Degree {
 
 fun createDegree_SOC(): Degree {
     return Degree(
+        name: "Sociology"
         requirements = listOf(
             CourseRequirement(
                 Course("SOC", 1011),
@@ -67,6 +69,7 @@ fun createDegree_SOC(): Degree {
 
 fun createDegree_PHIL(): Degree {
     return Degree(
+        name = "Philosophy"
         requirements = listOf(
             OneOfRequirement(
                 listOf(
@@ -110,13 +113,4 @@ fun createStudent(input: Int): Student {
         courses = emptyList())
 }
 
-fun pickYourMajor(){
-    print("Enter the number that corresponds to your major...")
-    print("1. Computer Science")
-    print("2. Philosophy")
-    print("3. Sociology")
-
-    val answer = readLine()!!.toInt()
-    majorReqs(answer)
-}
 

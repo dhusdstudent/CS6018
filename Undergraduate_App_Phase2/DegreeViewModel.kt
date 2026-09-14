@@ -1,21 +1,32 @@
 import javax.lang.model.type.UnionType
 
-class DegreeViewModel : ViewModel() {
-    val allMajors = listOf(
-        "Computer Science" to createDegree_CS(),
-        "Philosophy" to createDegree_PHIL(),
-        "Sociology" to createDegree_SOC()
-    )
+class DegreeViewModel (
+    private val repository: DegreeRepo
+) :ViewModel() {
+//
+//    private val allMajors = listOf(
+//        createDegree_CS(),
+//        createDegree_PHIL(),
+//        createDegree_SOC()
+//    )
 
     var student by mutableStateOf<Student?>(null)
+    priate set
+
+    var availableMajors by mutableStateOf<List<DegreePlan>>(emptyList())
         private set
 
-    fun selectMajor(major: Degree) {
-        student = Student(
-            major = major,
-            courses = emptyList()
-        )
+    fun selectMajor(major: DegreePlan) {
+        viewModelScope.launch {
+            val degree = repository.fetchDegree(plan.path)
+
+            student = Student(
+                major = major,
+                courses = emptyList()
+            )
+        }
     }
+}
 
     fun addCourse(course: Course) {
         val currentStudent = student ?: return
@@ -32,4 +43,4 @@ class DegreeViewModel : ViewModel() {
             courses = currentStudent.courses - course
         )
     }
-}
+
