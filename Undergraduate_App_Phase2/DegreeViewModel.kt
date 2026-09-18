@@ -11,22 +11,32 @@ class DegreeViewModel (
 //    )
 
     var student by mutableStateOf<Student?>(null)
-    priate set
+    private set
 
     var availableMajors by mutableStateOf<List<DegreePlan>>(emptyList())
         private set
 
+    init {
+        loadTheDegrees()
+    }
+
+    private fun loadTheDegrees() {
+        viewModelScope.launch {
+            availableMajors = repository.fetchDegreePlans().plans
+        }
+    }
+
     fun selectMajor(major: DegreePlan) {
         viewModelScope.launch {
-            val degree = repository.fetchDegree(plan.path)
+            val degree = repository.fetchDegree(major.path)
 
             student = Student(
-                major = major,
+                major = degree,
                 courses = emptyList()
             )
         }
     }
-}
+
 
     fun addCourse(course: Course) {
         val currentStudent = student ?: return
@@ -36,11 +46,11 @@ class DegreeViewModel (
         )
     }
 
-    fun removeCourse(course: Course){
+    fun removeCourse(course: Course) {
         val currentStudent = student ?: return
 
         student = currentStudent.copy(
             courses = currentStudent.courses - course
         )
     }
-
+}
