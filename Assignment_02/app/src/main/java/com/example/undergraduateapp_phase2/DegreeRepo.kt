@@ -2,21 +2,24 @@ package com.example.undergraduateapp_phase2
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient
+
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+
 
 class DegreeRepo(
     private val client: HttpClient
-)
-{
+) {
+    companion object {
+        private const val URL = "https://msd2026.github.io/degreePlans/"
+    }
 
-    private val URL =
-        "https://msd2026.github.io/degreePlans/cs.json"
 
     suspend fun fetchDegreePlans(): DegreePlanList {
         return client.get("${URL}degreePlans.json").body()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun fetchDegree(path: String): Degree {
         val DTO: DegreeDTO = client.get("$URL$path").body()
         return DTO.toDomain()

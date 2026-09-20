@@ -1,7 +1,5 @@
 package com.example.undergraduateapp_phase2
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -30,7 +28,6 @@ class DegreeViewModel (
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun selectMajor(major: DegreePlan) {
         viewModelScope.launch {
             val degree = repository.fetchDegree(major.path)
