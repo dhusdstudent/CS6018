@@ -1,8 +1,0 @@
-I started off a little unsure how to approach the idea of consolidating the pieces of
-my Kotlin code into a running program. Based on past languages we used, I assumed it
-relied on a Main() type function.
-
-I did my code review with Dylan, who pointed out that that wasn't the ideal way to approach
-the code, especially in light of what would be required of us for Phase 2. As a result, I did
-away with my Main() function entirely (as well as a handful of other supporting functions
-that only existed to set up parameters for Main()) and moved towards a more UI-based approach.
