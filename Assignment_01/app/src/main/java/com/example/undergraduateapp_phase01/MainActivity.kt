@@ -2,8 +2,6 @@ package com.example.undergraduateapp_phase01
 
 import Course
 import Degree
-import Student
-import android.R.attr.onClick
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,11 +19,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import isReqSatisfied
 import majorReqs
 import reqStatus
 import setUpCourses
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+
 
 class MainActivity  : ComponentActivity() {
     override fun onCreate(savedInstancesState: Bundle?) {
@@ -36,6 +38,7 @@ class MainActivity  : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun DegreeApp(){
     var selectedMajor by remember { mutableStateOf(0) }
@@ -43,35 +46,40 @@ fun DegreeApp(){
     val roster = setUpCourses()
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(25.dp),
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier.fillMaxSize().padding(25.dp).verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.Top
     ){
-        Text ("Pick a major:")
-        Spacer(modifier = Modifier.height(16.dp))
+        if (selectedMajor == 0) {
+            Text("Pick a major:")
+            Spacer(modifier = Modifier.height(16.dp))
 
 
-        Button(onClick = {
-            selectedMajor = 1
-        selectedCourses = emptyList()}) {
-            Text("Computer Science")
-        }
+            Button(onClick = {
+                selectedMajor = 1
+                selectedCourses = emptyList()
+            }) {
+                Text("Computer Science")
+            }
 
-        Button(onClick = {
-            selectedMajor = 2
-            selectedCourses = emptyList()}) {
-            Text("Philosophy")
-        }
+            Button(onClick = {
+                selectedMajor = 2
+                selectedCourses = emptyList()
+            }) {
+                Text("Philosophy")
+            }
 
-        Button(onClick = {
-            selectedMajor = 3
-            selectedCourses = emptyList()}) {
-            Text("Sociology")
-        }
-
-        Spacer(modifier = Modifier.height(25.dp))
-
-        if (selectedMajor != 0){
+            Button(onClick = {
+                selectedMajor = 3
+                selectedCourses = emptyList()
+            }) {
+                Text("Sociology")
+            }
+        } else {
             val degree = majorReqs(selectedMajor)
+
+            Text("Your major is ${majorName(selectedMajor)}")
+            Spacer(modifier = Modifier.height(25.dp))
+
             Text("Course Roster")
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -126,5 +134,14 @@ fun isDegreeComplete(
 ) : Boolean {
     return degree.requirements.all { requirement ->
         isReqSatisfied(requirement, studentCourses)
+    }
+}
+
+fun majorName(major: Int): String{
+    return when (major){
+        1 -> "Computer Science"
+        2 -> "Philosophy"
+        3 -> "Sociology"
+        else -> "Error"
     }
 }
