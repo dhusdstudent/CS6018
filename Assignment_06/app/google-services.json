@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "354758090170",
+    "project_id": "scaffolding-13bab",
+    "storage_bucket": "scaffolding-13bab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354758090170:android:2ede13ecb2327bba551183",
+        "android_client_info": {
+          "package_name": "com.example.scaffolding"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC34H6K4q_s8Hf3JCoz0USuWwuZlJnAkqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
