@@ -109,7 +109,6 @@ fun DetectionOverlay(
         ) {
             for (detection in detections) {
                 val box = detection.theBox
-//TO DO
                 drawRect(
                     color = Color.Red,
                     topLeft = Offset(box.left, box.top),

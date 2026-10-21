@@ -7,7 +7,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
+import com.google.firebase.auth.FirebaseAuth
+import kotlin.collections.mutableMapOf
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,27 +26,56 @@ class MainActivity : ComponentActivity() {
     }
 
 
-@Composable
-fun App() {
-    val auth = FirebaseAuth.getInstance()
-    val user = auth.currentUser
+    @Composable
+    fun App() {
+        val auth = remember { FirebaseAuth.getInstance() }
 
-    if (user == null) {
-        LoginScreen()
-    } else {
-        CameraScreen()
-    }
-}
+        var user by remember {
+            mutableStateOf(auth.currentUser)
+        }
 
-    private fun checkCameraPermission(){
-        if (ContextCompat.checkSelfPermission(
-            this, Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED) {
-            setContent {
-                CameraScreen()
+        DisposableEffect(auth) {
+            val listener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+                user = firebaseAuth.currentUser
             }
+            auth.addAuthStateListener(listener)
+
+            onDispose {
+                auth.removeAuthStateListener(listener)
+            }
+        }
+
+        if (user == null) {
+            Login()
         } else {
-            camHasPermission.launch(Manifest.permission.CAMERA)
+            var showGallerby by remember(user?.uid) {
+                mutableStateOf(false)
+            }
+
+            if (showGallerby) {
+                PhotoGalleryScreen(
+                    onBack = { showGallerby = false },
+                    onLogout = { auth.signOut() }
+                )
+            } else {
+                CameraScreen(
+                    onOpenGallery = { showGallerby = true },
+                    onLogout = { auth.signOut() }
+                )
+            }
         }
     }
 }
+//
+//    private fun checkCameraPermission(){
+//        if (ContextCompat.checkSelfPermission(
+//            this, Manifest.permission.CAMERA
+//        ) == PackageManager.PERMISSION_GRANTED) {
+//            setContent {
+//                CameraScreen()
+//            }
+//        } else {
+//            camHasPermission.launch(Manifest.permission.CAMERA)
+//        }
+//    }
+//}
