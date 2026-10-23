@@ -1,0 +1,28 @@
+services:
+  app-server:
+    build:
+      context: ./server
+    ports:
+      - "8080:8080"
+    environment:
+      LDAP_HOST: ldap
+      LDAP_PORT: "389"
+      LDAP_BASE_DN: dc=example,dc=org
+    depends_on:
+      - ldap
+
+  ldap:
+    image: osixia/openldap:1.5.0
+    environment:
+        LDAP_ORGANISATION: Example Organization
+        LDAP_DOMAIN: example.org
+        LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD:?Set LDAP_ADMIN_PASSWORD in.env}
+
+    volumes:
+      - ldap=data:/var/lib/ldap
+      - ldap-config:/etc/ldap/slapd.d
+    restart: unless-stopped
+
+volumes:
+  ldap-data:
+  ldap-config:

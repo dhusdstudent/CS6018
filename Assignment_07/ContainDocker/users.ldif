@@ -1,0 +1,11 @@
+dn: ou=people,dc=example,dc=org
+objectClass: organizationalUnit
+ou: people
+
+dn: uid=student1,ou=people,dc=example,dc=org
+objectClass: inetOrgPerson
+cn: Test Student
+sn: Student
+uid: student1
+mail: student1@example.org
+userPassword: {SSHA}IARVwicoTOoBHJ1ihUesHE5rw34K4URI

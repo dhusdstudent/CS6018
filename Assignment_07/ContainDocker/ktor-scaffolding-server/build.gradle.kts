@@ -1,0 +1,30 @@
+
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    alias(ktorLibs.plugins.ktor)
+    alias(libs.plugins.kotlin.serialization)
+}
+
+group = "com.example"
+version = "1.0.0-SNAPSHOT"
+
+application {
+    mainClass = "io.ktor.server.netty.EngineMain"
+}
+
+kotlin {
+    jvmToolchain(21)
+}
+dependencies {
+    implementation("com.google.firebase:firebase-admin:9.7.0")
+    implementation("com.unboundid:unboundid-ldapsdk:7.0.5")
+
+    implementation(ktorLibs.serialization.kotlinx.json)
+    implementation(ktorLibs.server.contentNegotiation)
+    implementation(ktorLibs.server.core)
+    implementation(ktorLibs.server.netty)
+    implementation(libs.logback.classic)
+
+    testImplementation(kotlin("test"))
+    testImplementation(ktorLibs.server.testHost)
+}

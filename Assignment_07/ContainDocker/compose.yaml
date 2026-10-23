@@ -1,0 +1,41 @@
+
+services:
+  ldap:
+    image: osixia/openldap:1.5.0
+    environment:
+      LDAP_ORGANISATION: "Scaffolding Class"
+      LDAP_DOMAIN: "example.org"
+      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD:?Set LDAP_ADMIN_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:389:389"
+    volumes:
+      - ldap-data:/var/lib/ldap
+      - ldap-config:/etc/ldap/slapd.d
+    restart: unless-stopped
+
+  app:
+    build:
+      context: ./ktor-scaffolding-server
+
+    environment:
+      PORT: "8080"
+      LDAP_HOST: ldap
+      LDAP_PORT: "389"
+      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD:?Set LDAP_ADMIN_PASSWORD in .env}
+      GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/firebase-service-account.json
+
+    volumes:
+      - ./secrets/firebase-service-account.json:/run/secrets/firebase-service-account.json:ro
+
+    ports:
+      - "127.0.0.1:8080:8080"
+
+    depends_on:
+      - ldap
+
+    restart: unless-stopped
+
+
+volumes:
+  ldap-data:
+  ldap-config:
