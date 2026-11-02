@@ -1,15 +1,7 @@
 package com.example.userfacing
 
-import android.app.appsearch.SearchResult
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.userfacing.data.SearchRepository
-import com.example.userfacing.data.SearchResults
-import com.example.userfacing.data.SearchUIState
-import com.example.userfacing.data.TestSearchRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

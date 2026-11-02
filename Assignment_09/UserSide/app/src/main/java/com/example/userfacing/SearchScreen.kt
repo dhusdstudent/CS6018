@@ -1,4 +1,4 @@
-package com.example.userfacing.myui
+package com.example.userfacing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.userfacing.SearchViewModel
 import androidx.compose.runtime.*
 import androidx.lifecycle.viewmodel.compose.viewModel
 
