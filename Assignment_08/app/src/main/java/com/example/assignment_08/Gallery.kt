@@ -201,6 +201,13 @@ fun PhotoGalleryScreen(
 
                         if(caption.isNotBlank() && analyzingPath == null){
                             Text(
+                                text = caption,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+
+                        if (analysisError.isNotBlank()){
+                            Text(
                                 text = analysisError,
                                 color = MaterialTheme.colorScheme.error,
                                 style = MaterialTheme.typography.bodySmall
