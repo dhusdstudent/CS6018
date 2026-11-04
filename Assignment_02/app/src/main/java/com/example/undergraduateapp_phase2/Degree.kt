@@ -1,7 +1,5 @@
 package com.example.undergraduateapp_phase2
 
-import kotlinx.serialization.Serializable
-
 sealed interface DegreeRequirement
 
 data class Degree(
